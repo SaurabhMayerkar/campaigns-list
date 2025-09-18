@@ -1,0 +1,135 @@
+/* CampaignTable.css */
+.campaign-table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.campaign-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.table-header {
+  background-color: #f9fafb;
+}
+
+.table-header th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table-row {
+  transition: background-color 0.2s;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table-row:hover {
+  background-color: #f9fafb;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.table-row td {
+  padding: 1rem;
+  font-size: 0.875rem;
+}
+
+.campaign-name {
+  font-weight: 500;
+  color: #111827;
+}
+
+.campaign-date {
+  color: #6b7280;
+}
+
+.campaign-budget {
+  font-weight: 500;
+  color: #111827;
+}
+
+.campaign-user {
+  color: #6b7280;
+}
+
+.status-chip {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-chip.active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-chip.inactive {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.campaign-table-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .campaign-table-container {
+    border-radius: 4px;
+  }
+  
+  .table-header th,
+  .table-row td {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .table-header th {
+    font-size: 0.75rem;
+  }
+  
+  .table-row td {
+    font-size: 0.75rem;
+  }
+  
+  .campaign-name,
+  .campaign-budget {
+    font-size: 0.75rem;
+  }
+  
+  .campaign-date,
+  .campaign-user {
+    font-size: 0.7rem;
+  }
+  
+  .status-chip {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .campaign-table {
+    min-width: 600px; /* Allows horizontal scrolling on very small screens */
+  }
+  
+  .table-header th,
+  .table-row td {
+    padding: 0.5rem 0.25rem;
+  }
+}

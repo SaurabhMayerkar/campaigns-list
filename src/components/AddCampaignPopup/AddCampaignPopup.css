@@ -1,0 +1,176 @@
+/* AddCampaignPopup.css - Targeted fixes to remove bottom space */
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 24px;
+}
+
+.add-icon {
+  font-size: 1.2rem;
+}
+
+.add-campaign-form-container {
+  padding: 0; /* Remove all padding */
+  display: flex;
+  flex-direction: column;
+}
+
+.success-alert {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  border: 1px solid #a7f3d0;
+}
+
+.campaign-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field.full-width {
+  grid-column: 1 / -1;
+  margin-bottom: -8px; /* Compensate for any remaining space */
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-weight: 500;
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 2px;
+}
+
+.input-group input,
+.input-group select {
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  height: 44px;
+  box-sizing: border-box;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.input-group input.error,
+.input-group select.error {
+  border-color: #d32f2f;
+}
+
+.error-text {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: 2px;
+  min-height: 16px;
+}
+
+/* Date picker styling */
+.date-picker-input {
+  width: 100%;
+}
+
+.date-picker-input .MuiOutlinedInput-root {
+  height: 44px !important;
+}
+
+.date-picker-input .MuiInputBase-input {
+  height: 20px !important;
+  padding: 12px 14px !important;
+}
+
+/* Select dropdown styling */
+.input-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+  padding-right: 36px;
+}
+
+/* CRITICAL: Remove all MUI dialog padding and margins */
+.MuiDialogContent-root {
+  padding: 16px 24px !important; /* Remove top and bottom padding, keep sides */
+  margin: 0 !important;
+}
+
+.MuiDialogActions-root {
+  padding: 16px 24px 20px 24px !important;
+  margin: 0 !important;
+  border-top: 1px solid #e0e0e0;
+}
+
+.MuiDialog-paper {
+  margin: 0 !important;
+  overflow-y: visible !important;
+}
+
+.MuiDialogTitle-root {
+  padding: 20px 24px 16px 24px !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Remove any extra space from the form container */
+.campaign-form > *:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Ensure no extra space in form grid */
+.form-grid > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .MuiDialogContent-root {
+    padding: 0 20px !important;
+  }
+  
+  .MuiDialogActions-root {
+    padding: 12px 20px 16px 20px !important;
+  }
+  
+  .MuiDialogTitle-root {
+    padding: 16px 20px 12px 20px !important;
+  }
+}

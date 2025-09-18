@@ -1,0 +1,18 @@
+jest.config.cjs:
+module.exports = {
+  moduleNameMapper: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '^@/(.*)$': '<rootDir>/src/$1'
+  },
+  // other configurations...
+};
+
+src/components/__tests__/HelloWorld.test.tsx:
+import { render } from '@testing-library/react';
+import HelloWorld from '../HelloWorld';
+
+test('renders HelloWorld component', () => {
+  const { getByText } = render(<HelloWorld />);
+  const linkElement = getByText(/hello world/i);
+  expect(linkElement).toBeInTheDocument();
+});
