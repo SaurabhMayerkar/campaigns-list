@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// CampaignDashboard.tsx
 import { useState, useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchUsers } from '@/store/slices/userSlice';
@@ -10,6 +9,11 @@ import './CampaignDashboard.css';
 import { RootState } from '@/store/store';
 import { addCampaigns } from '@/store/slices/campaignSlice';
 
+/**
+ * CampaignDashboard Component
+ * Main dashboard for managing and viewing marketing campaigns
+ * Features search, filtering, and campaign management capabilities
+ */
 export const CampaignDashboard = () => {
   const dispatch = useAppDispatch();
 
@@ -23,9 +27,11 @@ export const CampaignDashboard = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
-  // CampaignDashboard.tsx - in the filteredCampaigns useMemo
+  /**
+   * Memoized filtered campaigns based on search term and date range
+   * Applies both text search and date range filtering to campaign list
+   */
   const filteredCampaigns = useMemo(() => {
-    console.log(campaigns)
     return campaigns.filter((campaign) => {
       // Name filter
       const matchesName = campaign.name
@@ -49,20 +55,19 @@ export const CampaignDashboard = () => {
         if (startDate && endDate && endDate < startDate) {
           matchesDateRange = false;
         }
+
         // Both start and end dates selected
         else if (startDate && endDate) {
-          // Campaign has start date within the range OR end date within the range
-          matchesDateRange =
-            (campaignStart >= startDate && campaignStart <= endDate) // Start date in range
+          matchesDateRange = (campaignStart >= startDate && campaignStart <= endDate);
         }
-        // Only start date selected
+
+        // Only start date selected - show campaigns starting on or after this date
         else if (startDate) {
-          // Campaign starts on or after start date
           matchesDateRange = campaignStart >= startDate;
         }
-        // Only end date selected
+
+        // Only end date selected - show campaigns ending on or before this date
         else if (endDate) {
-          // Campaign ends on or before end date
           matchesDateRange = campaignEnd <= endDate;
         }
       }
@@ -72,10 +77,12 @@ export const CampaignDashboard = () => {
   }, [campaigns, searchTerm, startDate, endDate]);
 
 
-  // Enhance campaigns with user names for display
+  /**
+   * Enhances campaigns with user names for display purposes
+   * Maps user IDs to actual user names for better readability
+   */
   const campaignsWithUserNames = useMemo(() => {
     const getUserNameById = (userId: number): string => {
-      console.log(users)
       const user = users.find(user => user.id === userId);
       return user ? user.name : 'Unknown User';
     };
@@ -86,14 +93,22 @@ export const CampaignDashboard = () => {
     }));
   }, [filteredCampaigns, users]);
 
+  /**
+   * Resets all search and filter criteria to their default values
+   */
   const handleClearFilters = () => {
     setSearchTerm('');
     setStartDate(null);
     setEndDate(null);
   };
 
-  // Global method for testing
+  /**
+    * Global method for testing - exposes AddCampaigns function to window object
+    * Allows external scripts to add campaigns for testing/demo purposes
+  */
   useEffect(() => {
+    dispatch(fetchUsers());
+
     (window as any).AddCampaigns = (newCampaigns: Campaign[]) => {
       if (Array.isArray(newCampaigns)) {
         dispatch(addCampaigns(newCampaigns));
@@ -108,31 +123,20 @@ export const CampaignDashboard = () => {
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
-
   return (
     <div className="campaign-dashboard-container">
-      {/* Header */}
       <div className="dashboard-header">
         <h1 className="dashboard-title">
           Campaign Management Dashboard
         </h1>
-        <p className="dashboard-subtitle">
-          Manage and monitor your marketing campaigns
-        </p>
       </div>
 
-      {/* Error Alert */}
       {usersError && (
         <div className="error-alert">
           Error Loading Users: {usersError}
         </div>
       )}
 
-
-      {/* Search and Filters */}
       <div className="filters-panel">
         <SearchFilters
           searchTerm={searchTerm}
@@ -145,24 +149,22 @@ export const CampaignDashboard = () => {
         />
       </div>
 
-      {/* Add Campaign Form */}
-      {!usersLoading && users.length > 0 ? (
-
+      {!usersLoading && users.length > 0 ?
+        (
           <div className="campaign-table-panel">
             <div className="table-header">
               <h2 className="table-title">
                 Campaigns {filteredCampaigns.length !== campaigns.length && `(${filteredCampaigns.length} of ${campaigns.length})`}
               </h2>
               <p className="table-subtitle">
-                {usersLoading
-                  ? 'Loading user data...'
-                  : `Showing ${filteredCampaigns.length} campaign${filteredCampaigns.length !== 1 ? 's' : ''}`}
+                {usersLoading ? 'Loading user data...'
+                  : `Showing ${filteredCampaigns.length} campaign${filteredCampaigns.length !== 1 ? 's' : ''}`
+                }
               </p>
             </div>
             <CampaignTable campaigns={campaignsWithUserNames} />
           </div>
-
-      )
+        )
         :
         <div className="loader-container">
           <div className="loader"></div>

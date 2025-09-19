@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { User, UserState } from '@/types/user.types';
+import { UserState } from "@/types/user.types";
 
 const initialState: UserState = {
   users: [],
@@ -10,24 +10,27 @@ const initialState: UserState = {
 
 // Async thunk for fetching users
 export const fetchUsers = createAsyncThunk(
-  'users/fetchUsers',
+  "users/fetchUsers",
   async (_, { rejectWithValue }) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL || 'https://jsonplaceholder.typicode.com';
+      const apiUrl = "https://jsonplaceholder.typicode.com";
+
       const response = await fetch(`${apiUrl}/users`);
       if (!response.ok) {
-        throw new Error('Failed to fetch users');
+        throw new Error("Failed to fetch users");
       }
       const users = await response.json();
       return users;
     } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
+      return rejectWithValue(
+        error instanceof Error ? error.message : "Unknown error"
+      );
     }
   }
 );
 
 const userSlice = createSlice({
-  name: 'users',
+  name: "users",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

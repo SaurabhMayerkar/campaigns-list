@@ -1,4 +1,3 @@
-// SearchFilters.tsx
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -18,6 +17,11 @@ interface SearchFiltersProps {
   onClearFilters: () => void;
 }
 
+/**
+ * SearchFilters Component
+ * Provides search and filtering controls for the campaigns dashboard
+ * Includes text search, date range filtering, and campaign creation functionality
+ */
 export const SearchFilters = ({
   searchTerm,
   onSearchChange,
@@ -32,25 +36,29 @@ export const SearchFilters = ({
   const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
 
 
+  /**
+   * Opens the Add Campaign popup dialog
+  */
   const handleOpenAddPopup = () => {
     setIsAddPopupOpen(true);
   };
 
+  /**
+   * Closes the Add Campaign popup dialog
+   */
   const handleCloseAddPopup = () => {
     setIsAddPopupOpen(false);
   };
-
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div className="search-filters-container">
         <div className="search-filters-header">
           <div className="filters-header">
-              <h2 className="filters-title">
-                              <span className="search-icon">🔍</span>
-                Search & Filter Campaigns
-              </h2>
-           
+            <h2 className="filters-title">
+              <span className="search-icon">🔍</span>
+              Search & Filter Campaigns
+            </h2>
 
             <Button
               variant="contained"
@@ -119,7 +127,6 @@ export const SearchFilters = ({
         </div>
       </div>
 
-      {/* Add Campaign Popup */}
       <AddCampaignPopup
         open={isAddPopupOpen}
         onClose={handleCloseAddPopup}

@@ -72,7 +72,7 @@ const renderWithStore = (component: React.ReactElement, store = createTestStore(
 describe('CampaignTable', () => {
   it('renders campaign data correctly', () => {
     const { getByText } = renderWithStore(<CampaignTable campaigns={mockCampaigns} />);
-    
+
     expect(getByText('Test Campaign 1')).toBeInTheDocument();
     expect(getByText('Test Campaign 2')).toBeInTheDocument();
     expect(getByText('$5,000.00')).toBeInTheDocument();
@@ -85,20 +85,20 @@ describe('CampaignTable', () => {
 
   it('displays user names correctly', () => {
     const { getByText } = renderWithStore(<CampaignTable campaigns={mockCampaigns} />);
-    
+
     expect(getByText('John Doe')).toBeInTheDocument();
     expect(getByText('Unknown User')).toBeInTheDocument();
   });
 
   it('shows empty state when no campaigns', () => {
     const { getByText } = renderWithStore(<CampaignTable campaigns={[]} />);
-    
+
     expect(getByText('No campaigns found matching your criteria.')).toBeInTheDocument();
   });
 
   it('formats dates correctly', () => {
     const { getByText } = renderWithStore(<CampaignTable campaigns={mockCampaigns} />);
-    
+
     expect(getByText('Jan 1, 2024')).toBeInTheDocument();
     expect(getByText('Dec 31, 2024')).toBeInTheDocument();
   });

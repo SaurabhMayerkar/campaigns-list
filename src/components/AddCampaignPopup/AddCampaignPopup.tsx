@@ -1,4 +1,3 @@
-// AddCampaignPopup.tsx
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { useForm, Controller } from 'react-hook-form';
@@ -16,11 +15,12 @@ import { Close as CloseIcon } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppDispatch } from '@/store/hooks';
 import { CampaignFormData } from '@/types/campaign.types';
 import { addCampaign } from '@/store/slices/campaignSlice';
 import './AddCampaignPopup.css';
 
+// Form validation schema using Zod for robust type-safe validation
 const formSchema = z.object({
   name: z.string().min(1, 'Campaign name is required'),
   startDate: z.date({
@@ -40,9 +40,13 @@ interface AddCampaignPopupProps {
   onClose: () => void;
 }
 
+/**
+ * AddCampaignPopup Component
+ * A modal dialog for creating new marketing campaigns with form validation
+ * Features real-time validation, date range constraints, and success feedback
+ */
 export const AddCampaignPopup = ({ open, onClose }: AddCampaignPopupProps) => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector((state) => state.users.users);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const {
@@ -51,7 +55,7 @@ export const AddCampaignPopup = ({ open, onClose }: AddCampaignPopupProps) => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<CampaignFormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema),  // Integrate Zod validation
     defaultValues: {
       name: '',
       budget: 0,
@@ -59,9 +63,14 @@ export const AddCampaignPopup = ({ open, onClose }: AddCampaignPopupProps) => {
     },
   });
 
+   /**
+   * Handles form submission with validated data
+   * Creates a new campaign object and dispatches to Redux store
+   * Shows success message and resets form on successful submission
+   */
   const onSubmit = (data: CampaignFormData) => {
     const newCampaign = {
-      id: Date.now().toString(),
+      id: null,
       name: data.name,
       startDate: format(data.startDate, 'MM/dd/yyyy'),
       endDate: format(data.endDate, 'MM/dd/yyyy'),
@@ -80,8 +89,13 @@ export const AddCampaignPopup = ({ open, onClose }: AddCampaignPopupProps) => {
       setSubmitSuccess(false);
       onClose();
     }, 2000);
+
   };
 
+  /**
+   * Handles dialog close with form reset
+   * Ensures form is cleared when modal is closed
+   */
   const handleClose = () => {
     reset();
     onClose();
@@ -118,7 +132,6 @@ export const AddCampaignPopup = ({ open, onClose }: AddCampaignPopupProps) => {
 
             <form onSubmit={handleSubmit(onSubmit)} className="campaign-form">
               <div className="form-grid">
-                {/* Row 1: Campaign Name and Budget */}
                 <div className="form-row">
                   <div className="form-field">
                     <Controller
@@ -166,7 +179,6 @@ export const AddCampaignPopup = ({ open, onClose }: AddCampaignPopupProps) => {
                   </div>
                 </div>
 
-                {/* Row 2: Start Date and End Date */}
                 <div className="form-row">
                   <div className="form-field">
                     <Controller
@@ -229,9 +241,6 @@ export const AddCampaignPopup = ({ open, onClose }: AddCampaignPopupProps) => {
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={handleClose} color="inherit">
-          Cancel
-        </Button>
         <Button
           onClick={handleSubmit(onSubmit)}
           variant="contained"

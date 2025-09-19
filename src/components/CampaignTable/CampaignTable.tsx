@@ -1,4 +1,3 @@
-// CampaignTable.tsx
 import { useMemo } from 'react';
 import { useAppSelector } from '@/store/hooks';
 import { Campaign, CampaignWithStatus } from '@/types/campaign.types';
@@ -11,6 +10,8 @@ interface CampaignTableProps {
 export const CampaignTable = ({ campaigns }: CampaignTableProps) => {
   const users = useAppSelector((state) => state.users.users);
 
+  // Memoize campaign data processing to avoid recalculating on every render
+  // when dependencies (campaigns, users) haven't changed
   const campaignsWithStatus = useMemo<CampaignWithStatus[]>(() => {
     const currentDate = new Date();
     return campaigns.map((campaign) => {
@@ -27,6 +28,9 @@ export const CampaignTable = ({ campaigns }: CampaignTableProps) => {
     });
   }, [campaigns, users]);
 
+  /**
+   * Format currency amount to USD format
+   */
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',

@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import campaignReducer from './slices/campaignSlice'; // Changed from userSlice
-import userReducer from './slices/userSlice'; // Keep this as is
+import { configureStore } from "@reduxjs/toolkit";
+import campaignReducer from "./slices/campaignSlice";
+import userReducer from "./slices/userSlice"; 
 
 export const store = configureStore({
   reducer: {
